@@ -3,8 +3,9 @@ import { useState } from 'react';
 
 
 const PostList = () => {
-  const [userId, setUserId] = useState<number>();
-  const { data: posts, error, isLoading } = usePosts(userId);
+  const pageSize = 10;
+  const [page, setPage] = useState<number>(1);
+  const { data: posts, error, isLoading } = usePosts({ page, pageSize });
 
   if (error) return <p>{error.message}</p>;
 
@@ -12,12 +13,6 @@ const PostList = () => {
 
   return (
     <>
-      <select onChange={(event) => setUserId(parseInt(event.target.value))} className="form-select mb-3" value={userId}>
-        <option value="">Select Users</option>
-        <option value="1">User 1</option>
-        <option value="2">User 2</option>
-        <option value="3">User 3 </option>
-      </select>
       <h1>Posts</h1>
       <ul className="list-group">
         {posts?.map((post) => (
@@ -26,6 +21,19 @@ const PostList = () => {
           </li>
         ))}
       </ul>
+      <button
+        className="btn btn-primary my-3 mx-2"
+        onClick={() => setPage((page) => page - 1)}
+        disabled={page === 1}
+      >
+        Previous
+      </button>
+      <button
+        className="btn btn-primary my-3 ms-2"
+        onClick={() => setPage((page) => page + 1)}
+      >
+        Next
+      </button>
     </>
   );
 };
