@@ -13,6 +13,10 @@ const TodoForm = () => {
 
       //APPROACH: Update the cache with the new data without refetching
       queryClient.setQueryData<Todo[]>(['todos'], todos => [savedTodo, ...(todos || [])]);
+
+      if (ref.current) {
+        ref.current.value = '';
+      }
     },
     onError(error, variables) {
       console.error('error:', error);
@@ -43,7 +47,11 @@ const TodoForm = () => {
           <input ref={ref} type="text" className="form-control" />
         </div>
         <div className="col">
-          <button className="btn btn-primary">Add</button>
+          <button
+            disabled={addTodo.isPending}
+            className="btn btn-primary" >
+            {addTodo.isPending ? 'Adding...' : 'Add'}
+          </button>
         </div>
       </form>
     </>
