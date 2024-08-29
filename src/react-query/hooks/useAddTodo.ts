@@ -42,6 +42,8 @@ const useAddTodo = (onAdd: () => void) => {
                 return;
             }
 
+            console.error(error, newTodo);
+
             queryClient.setQueryData<Todo[]>(['todos'], context.previousTodos);
         },
     });
