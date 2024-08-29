@@ -11,7 +11,7 @@ interface LogoutAction extends Action {
     type: 'LOGOUT';
 };
 
-type AuthAction = LoginAction | LogoutAction;
+export type AuthAction = LoginAction | LogoutAction;
 
 
 const authReducer = (state: string, action: AuthAction): string => {
